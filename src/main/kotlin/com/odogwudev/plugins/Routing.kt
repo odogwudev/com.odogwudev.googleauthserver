@@ -1,7 +1,6 @@
 package com.odogwudev.plugins
 
-import com.odogwudev.routes.rootRoute
-import com.odogwudev.routes.unauthorizedRoute
+import com.odogwudev.routes.*
 import io.ktor.server.routing.*
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -12,6 +11,9 @@ fun Application.configureRouting() {
 
     routing {
         rootRoute()
+        tokenVerificationRoute()
+        authorizedRoute()
         unauthorizedRoute()
+
     }
 }

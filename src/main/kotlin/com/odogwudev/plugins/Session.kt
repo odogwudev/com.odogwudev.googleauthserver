@@ -11,7 +11,7 @@ fun Application.configureSession() {
     val secretAuthKey = hex("02030405060708090a0b0c")
     install(Sessions) {// two ways to transport session cookie or header here its cookie been used
         cookie<UserSession>(
-            name = "USER SESSION",
+            name = "USER_SESSION",
             storage = directorySessionStorage(File(".sessions"))
         ) {
             // cookie.secure = true when i move from local host
