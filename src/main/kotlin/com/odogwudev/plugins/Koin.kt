@@ -1,6 +1,5 @@
 package com.odogwudev.plugins
 
-
 import io.ktor.events.EventDefinition
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
