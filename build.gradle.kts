@@ -1,13 +1,19 @@
-val ktorVersion: String by project
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val kmongoVersion: String by project
-val koinVersion: String by project
+@file:Suppress("PropertyName")
+
+val ktor_version: String by project
+val kotlin_version: String by project
+val logback_version: String by project
+val kmongo_version: String by project
+val bcrypt_version: String by project
+val apache_commons_version: String by project
+val mongodb_driver_version: String by project
+val firebase_admin_version: String by project
+val koin_version: String by project
 
 plugins {
     application
-    kotlin("jvm") version "1.6.21"
-                id("org.jetbrains.kotlin.plugin.serialization") version "1.6.21"
+    kotlin("jvm") version "1.5.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.10"
 }
 
 group = "com.odogwudev"
@@ -25,33 +31,53 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-call-logging-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-netty-jvm:$ktorVersion")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
+    //region Server
+    implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-server-call-logging:$ktor_version")
+    implementation("io.ktor:ktor-server-auth:$ktor_version")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
+    implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-gson:$ktor_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
+    implementation("io.ktor:ktor-server-html-builder:$ktor_version")
+    implementation("io.ktor:ktor-server-status-pages:$ktor_version")
+    implementation("ch.qos.logback:logback-classic:$logback_version")
+    //endregion
 
-    // Content Negotiation
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktorVersion")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktorVersion")
+    //region Client
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    implementation("io.ktor:ktor-serialization-gson:$ktor_version")
+    implementation ("io.ktor:ktor-client-apache:$ktor_version")
+    implementation("io.ktor:ktor-client-logging:$ktor_version")
 
-    // Sessions
-    implementation("io.ktor:ktor-server-sessions-jvm:$ktorVersion")
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
 
-    // Auth
-    implementation("io.ktor:ktor-server-auth-jvm:$ktorVersion")
+    //endregion
 
-    // KMongo
-    implementation("org.litote.kmongo:kmongo-async:$kmongoVersion")
-    implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
+    //Region MongoDB
+    implementation("org.litote.kmongo:kmongo:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-async:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-id:$kmongo_version")
+    implementation("org.mongodb:mongodb-driver-sync:$mongodb_driver_version")
+    //endregion
 
-    // Koin core features
-    implementation("io.insert-koin:koin-core:$koinVersion")
-    implementation("io.insert-koin:koin-ktor:$koinVersion")
-    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
+    implementation("at.favre.lib:bcrypt:$bcrypt_version")
 
-    // Google Client API Library
-    implementation("com.google.api-client:google-api-client:1.33.2")
+    implementation("org.apache.commons:commons-email:$apache_commons_version")
 
+    implementation("com.google.firebase:firebase-admin:$firebase_admin_version")
+
+    //region Koin
+    // Koin Core features
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+    // Testing
+    // Koin Test features
+    testImplementation ("io.insert-koin:koin-test:$koin_version")
+    // Koin for JUnit 4
+    testImplementation ("io.insert-koin:koin-test-junit4:$koin_version")
+    testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    //endregion
 }
