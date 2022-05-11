@@ -62,7 +62,7 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.saveUserToDb(
 
     if (response) {
         app.log.info("Save User Complete")
-        call.sessions.set(UserSession(id = "134", name = "odogwudev"))
+        call.sessions.set(UserSession(id = sub, name = name))//dynamically save all google info
         call.respondRedirect(Endpoints.Authorized.path)
     } else {
         app.log.info("Save Failed")

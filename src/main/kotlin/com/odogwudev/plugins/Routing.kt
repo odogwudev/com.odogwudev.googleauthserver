@@ -13,6 +13,7 @@ fun Application.configureRouting() {
         val userDataSource: UserDataSource by inject(UserDataSource::class.java)//part of koin library
         rootRoute()
         tokenVerificationRoute(application, userDataSource)
+        getUserInfoRoute(application, userDataSource)
         authorizedRoute()
         unauthorizedRoute()
 
