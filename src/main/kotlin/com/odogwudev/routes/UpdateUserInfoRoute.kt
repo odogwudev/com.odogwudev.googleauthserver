@@ -34,7 +34,7 @@ fun Route.updateUserRoute(
                     )
 
                 } catch (e: Exception) {
-                    app.log.info(" Updating User failed due to: $e")
+                    app.log.info(" Updating User failed due to: ${e.message}")
                     call.respondRedirect(Endpoints.Unauthorized.path)
                 }
             }
