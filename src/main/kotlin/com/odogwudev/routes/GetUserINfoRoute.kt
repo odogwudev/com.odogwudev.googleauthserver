@@ -1,7 +1,7 @@
 package com.odogwudev.routes
 
 import com.odogwudev.domain.model.ApiResponse
-import com.odogwudev.domain.model.Endpoints
+import com.odogwudev.domain.model.Endpoint
 import com.odogwudev.domain.model.UserSession
 import com.odogwudev.domain.repository.UserDataSource
 import io.ktor.http.*
@@ -15,11 +15,11 @@ fun Route.getUserInfoRoute(
     userDataSource: UserDataSource
 ) {
     authenticate("auth-session") {
-        get(Endpoints.GetUserInfo.path) {
-            val userSession = call.principal<UserSession>()//this principal is to get user sessio object from thr client
+        get(Endpoint.GetUserInfo.path) {
+            val userSession = call.principal<UserSession>()
             if (userSession == null) {
-                app.log.info("Invalid Session")
-                call.respondRedirect(Endpoints.Unauthorized.path)
+                app.log.info("INVALID SESSION")
+                call.respondRedirect(Endpoint.Unauthorized.path)
             } else {
                 try {
                     call.respond(
@@ -30,8 +30,8 @@ fun Route.getUserInfoRoute(
                         status = HttpStatusCode.OK
                     )
                 } catch (e: Exception) {
-                    app.log.info("Error Fetching User Info")
-                    call.respondRedirect(Endpoints.Unauthorized.path)
+                    app.log.info("GETTING USER INFO ERROR: ${e.message}")
+                    call.respondRedirect(Endpoint.Unauthorized.path)
                 }
             }
         }

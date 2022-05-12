@@ -3,4 +3,7 @@ package com.odogwudev.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserUpdate(val firstName: String, val lastName: String)
+data class UserUpdate(
+    val firstName: String,
+    val lastName: String
+)

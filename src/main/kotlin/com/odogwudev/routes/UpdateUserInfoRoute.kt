@@ -1,7 +1,7 @@
 package com.odogwudev.routes
 
 import com.odogwudev.domain.model.ApiResponse
-import com.odogwudev.domain.model.Endpoints
+import com.odogwudev.domain.model.Endpoint
 import com.odogwudev.domain.model.UserSession
 import com.odogwudev.domain.model.UserUpdate
 import com.odogwudev.domain.repository.UserDataSource
@@ -15,15 +15,15 @@ import io.ktor.util.pipeline.*
 
 fun Route.updateUserRoute(
     app: Application,
-    userDataSource: UserDataSource,
+    userDataSource: UserDataSource
 ) {
     authenticate("auth-session") {
-        put(Endpoints.UpdateUserInfo.path) {
+        put(Endpoint.UpdateUserInfo.path) {
             val userSession = call.principal<UserSession>()
             val userUpdate = call.receive<UserUpdate>()
             if (userSession == null) {
-                app.log.info("Invalid Session")
-                call.respondRedirect(Endpoints.Unauthorized.path)
+                app.log.info("INVALID SESSION")
+                call.respondRedirect(Endpoint.Unauthorized.path)
             } else {
                 try {
                     updateUserInfo(
@@ -32,10 +32,9 @@ fun Route.updateUserRoute(
                         userUpdate = userUpdate,
                         userDataSource = userDataSource
                     )
-
                 } catch (e: Exception) {
-                    app.log.info(" Updating User failed due to: ${e.message}")
-                    call.respondRedirect(Endpoints.Unauthorized.path)
+                    app.log.info("UPDATE USER INFO ERROR: $e")
+                    call.respondRedirect(Endpoint.Unauthorized.path)
                 }
             }
         }
@@ -54,16 +53,16 @@ private suspend fun PipelineContext<Unit, ApplicationCall>.updateUserInfo(
         lastName = userUpdate.lastName
     )
     if (response) {
-        app.log.info("USer succesfuly update")
+        app.log.info("USER SUCCESSFULLY UPDATED")
         call.respond(
             message = ApiResponse(
                 success = true,
-                message = "Successfully Updated"
+                message = "Successfully Updated!"
             ),
             status = HttpStatusCode.OK
         )
     } else {
-        app.log.info("Error Updating User Record")
+        app.log.info("ERROR UPDATING THE USER")
         call.respond(
             message = ApiResponse(success = false),
             status = HttpStatusCode.BadRequest

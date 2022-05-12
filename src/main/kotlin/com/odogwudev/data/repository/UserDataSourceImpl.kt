@@ -6,6 +6,7 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import org.litote.kmongo.setValue
 
+
 class UserDataSourceImpl(
     dataBase: CoroutineDatabase//its a version of mongo databsw that supports coroutines
 ) : UserDataSource {
@@ -32,7 +33,11 @@ class UserDataSourceImpl(
             .wasAcknowledged()//if user gets deleted was acknowledge should return true
     }
 
-    override suspend fun updateUserInfo(userId: String, firstName: String, lastName: String): Boolean {
+    override suspend fun updateUserInfo(
+        userId: String,
+        firstName: String,
+        lastName: String
+    ): Boolean {
         return users.updateOne(
             filter = User::id eq userId,
             update = setValue(

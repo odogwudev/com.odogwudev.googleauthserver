@@ -7,13 +7,14 @@ import org.koin.dsl.module
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
-val koinModule = module {
+
+val koinModule = module {// library for mongodb
     single {
-        KMongo.createClient()// library for mongodb
+        KMongo.createClient()
             .coroutine
             .getDatabase(DATABASE)
     }
-    single <UserDataSource>{//type of user data source
+    single<UserDataSource> {//type of user data source
         UserDataSourceImpl(get())// get wwould fetch koin instance which is already provided amd already declared aboce
     }
 }

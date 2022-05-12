@@ -1,6 +1,6 @@
 package com.odogwudev.plugins
 
-import com.odogwudev.domain.model.Endpoints
+import com.odogwudev.domain.model.Endpoint
 import com.odogwudev.domain.model.UserSession
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -13,7 +13,7 @@ fun Application.configureAuth() {
                 session
             }
             challenge {
-                call.respondRedirect(Endpoints.Unauthorized.path)
+                call.respondRedirect(Endpoint.Unauthorized.path)
             }
         }
     }
