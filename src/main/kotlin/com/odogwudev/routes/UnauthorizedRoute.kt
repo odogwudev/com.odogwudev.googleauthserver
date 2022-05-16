@@ -1,15 +1,15 @@
 package com.odogwudev.routes
 
-import com.odogwudev.domain.model.Endpoints
+import com.odogwudev.domain.model.Endpoint
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.unauthorizedRoute() {
-    get(Endpoints.Unauthorized.path) {
+    get(Endpoint.Unauthorized.path) {
         call.respond(
-            message = "Please obtain authorization...",
+            message = "Not Authorized.",
             status = HttpStatusCode.Unauthorized
         )
     }
