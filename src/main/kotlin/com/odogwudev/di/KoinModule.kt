@@ -10,7 +10,7 @@ import org.litote.kmongo.reactivestreams.KMongo
 
 val koinModule = module {// library for mongodb
     single {
-        KMongo.createClient(System.getenv("MONGODB_URI"))//using heroki i have to connect to atlas using a connection string or from heroku platform
+        KMongo.createClient()//System.getenv("MONGODB_URI"))//using heroki i have to connect to atlas using a connection string or from heroku platform
             .coroutine
             .getDatabase(DATABASE)
     }
